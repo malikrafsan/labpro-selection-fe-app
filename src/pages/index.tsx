@@ -1,19 +1,17 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
 import styles from '../styles/Home.module.css';
-import { NotifContext } from '../contexts';
-import { useContext } from 'react';
-import { BootstrapVariant } from '../enums';
-import { ApiSrv } from '../services';
-import { IExampleAPI } from '../interfaces';
+import { apiSrv } from '../services';
+import { LoginForm, RegisterForm, VerifyUser } from '../components';
 
 const Home: NextPage = () => {
-  const pushNotif = useContext(NotifContext);
-  const [data, setData] = useState<IExampleAPI>();
-  const [header, setHeader] = useState<string>('');
-  const [content, setContent] = useState<string[]>([]);
-  const [variant, setVariant] = useState<BootstrapVariant>();
+  const handleTestApi = async () => {
+    const data = await apiSrv.get({
+      url: 'users',
+    });
+    console.log(data);
+    alert('finish');
+  };
 
   return (
     <div className={styles.container}>
@@ -25,156 +23,16 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <h1>halo</h1>
-        <button
-          onClick={async (e) => {
-            e.preventDefault();
-            const data: IExampleAPI = await ApiSrv.getInstance().get({
-              url: '/api/example',
-            });
-            if (data) {
-              setData(data);
-            }
-            pushNotif({
-              header: 'Successfully fetch data',
-              content: [
-                'ini hasil datanya yaa gan',
-                JSON.stringify(data),
-              ],
-              variant: BootstrapVariant.SUCCESS,
-            });
-          }}
-        >
-          try API Success
-        </button>
-        <button
-          onClick={async (e) => {
-            e.preventDefault();
-            await ApiSrv.getInstance().get({
-              url: '/failed',
-            });
-          }}
-        >
-          try API Failed
-        </button>
-      </div>
-      <div>
-        <h1>data</h1>
-        {data && (
-          <div>
-            <div>
-              <div>{data.name}</div>
-              <div>{data.email}</div>
-              <div>{data.password}</div>
-            </div>
-            <div>
-              <button onClick={() => setData(undefined)}>
-                clear
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-      <div>
-        <div>notif</div>
-        <form>
-          <div>
-            <label htmlFor="header">header</label>
-            <div>
-              <input
-                type="text"
-                id="header"
-                value={header}
-                onChange={(e) => setHeader(e.target.value)}
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="content">content</label>
-            <div>
-              <div>
-                {content.map((_, i) => {
-                  return (
-                    <div key={i}>
-                      <input
-                        type="text"
-                        value={content[i]}
-                        onChange={(e) => {
-                          const newContent = [...content];
-                          newContent[i] = e.target.value;
-                          setContent(newContent);
-                        }}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-              <div>
-                {Object.keys(BootstrapVariant).map((key, idx) => {
-                  return (
-                    <div key={idx}>
-                      <input
-                        type="radio"
-                        name="variant"
-                        value={key}
-                        checked={
-                          variant ===
-                          BootstrapVariant[
-                            key as keyof typeof BootstrapVariant
-                          ]
-                        }
-                        onChange={(e) => {
-                          setVariant(
-                            BootstrapVariant[
-                              key as keyof typeof BootstrapVariant
-                            ],
-                          );
-                        }}
-                      />
-                      {key}
-                    </div>
-                  );
-                })}
-              </div>
-              <div>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setContent([...content, '']);
-                  }}
-                >
-                  Add new content
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
+
+      <main>
         <div>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              if (header && content.length > 0) {
-                pushNotif({
-                  header,
-                  content,
-                  variant,
-                });
-                setHeader('');
-                setContent([]);
-              } else {
-                pushNotif({
-                  header: 'argument not enough',
-                  content: ['Please fill all form'],
-                  variant: BootstrapVariant.DANGER,
-                });
-              }
-            }}
-          >
-            push notif
-          </button>
+          <h1>test API</h1>
+          <button onClick={handleTestApi}>Click Me</button>
         </div>
-      </div>
+        <LoginForm />
+        <RegisterForm />
+        <VerifyUser />
+      </main>
     </div>
   );
 };

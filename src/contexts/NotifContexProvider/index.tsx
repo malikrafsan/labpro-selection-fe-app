@@ -3,14 +3,10 @@ import { AlertDismissible } from '../../components';
 import { ToastContainer } from 'react-bootstrap';
 import { BootstrapVariant } from '../../enums';
 import { useEffect } from 'react';
-import { ApiSrv } from '../../services';
+import { apiSrv } from '../../services';
 
 const NotifContext = createContext(
-  ({
-    header,
-    content,
-    variant,
-  }: {
+  (_: {
     header: string;
     content: string[];
     variant?: BootstrapVariant;
@@ -60,7 +56,7 @@ const NotifContextProvider = ({
   };
 
   useEffect(() => {
-    ApiSrv.getInstance().setDefaultOnError(
+    apiSrv.setDefaultOnError(
       ({ header, content }: { header: string; content: string }) => {
         pushNotif({
           header,

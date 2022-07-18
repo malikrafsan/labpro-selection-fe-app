@@ -1,5 +1,5 @@
-import ApiSrv from './ApiSrv';
+import apiSrv from './ApiSrv';
 
 export {
-  ApiSrv
+  apiSrv
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { IParamsAPI } from '../interfaces';
 
 class APIBoundary {
-  private readonly API_URL = 'http://localhost:3000';
+  private readonly API_URL = 'http://localhost:5000';
 
   async get(token: string, path: string) {
     const url = `${this.API_URL}/${path}`;
@@ -82,7 +82,6 @@ class APIBoundary {
 class ApiSrv {
   private static readonly apiBoundary: APIBoundary =
     new APIBoundary();
-  private static instance: ApiSrv;
   private defaultOnError: ({
     header,
     content,
@@ -91,7 +90,7 @@ class ApiSrv {
     content: string;
   }) => void;
 
-  private constructor() {
+  constructor() {
     this.defaultOnError = ({
       header,
       content,
@@ -105,13 +104,6 @@ class ApiSrv {
 
   public setDefaultOnError(onError: ({ header, content }: { header: string; content: string; }) => void) {
     this.defaultOnError = onError;
-  }
-
-  public static getInstance() {
-    if (!this.instance) {
-      this.instance = new ApiSrv();
-    }
-    return this.instance;
   }
 
   private errorHandler(
@@ -212,12 +204,12 @@ class ApiSrv {
       urlParams,
     );
 
-    if (!this.validateRes(res, withoutNotif, onError)) {
-      return null;
-    }
-
     if (err) {
       return this.errorHandler(err, withoutNotif, onError);
+    }
+
+    if (!this.validateRes(res, withoutNotif, onError)) {
+      return null;
     }
 
     if (res) {
@@ -248,12 +240,12 @@ class ApiSrv {
       params ? params : {},
     );
 
-    if (!this.validateRes(res, withoutNotif, onError)) {
-      return null;
-    }
-
     if (err) {
       return this.errorHandler(err, withoutNotif, onError);
+    }
+
+    if (!this.validateRes(res, withoutNotif, onError)) {
+      return null;
     }
 
     if (res) {
@@ -284,12 +276,12 @@ class ApiSrv {
       params ? params : {},
     );
 
-    if (!this.validateRes(res, withoutNotif, onError)) {
-      return null;
-    }
-
     if (err) {
       return this.errorHandler(err, withoutNotif, onError);
+    }
+
+    if (!this.validateRes(res, withoutNotif, onError)) {
+      return null;
     }
 
     if (res) {
@@ -318,12 +310,12 @@ class ApiSrv {
       url,
     );
 
-    if (!this.validateRes(res, withoutNotif, onError)) {
-      return null;
-    }
-
     if (err) {
       return this.errorHandler(err, withoutNotif, onError);
+    }
+
+    if (!this.validateRes(res, withoutNotif, onError)) {
+      return null;
     }
 
     if (res) {
@@ -339,4 +331,4 @@ class ApiSrv {
   }
 }
 
-export default ApiSrv;
+export default new ApiSrv();

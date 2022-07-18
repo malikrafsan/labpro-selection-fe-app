@@ -1,4 +1,4 @@
-import { NotifContext, NotifContextProvider } from './notif-contex-provider';
+import { NotifContext, NotifContextProvider } from './NotifContexProvider';
 
 export {
   NotifContext,
