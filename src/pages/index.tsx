@@ -2,7 +2,12 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { apiSrv } from '../services';
-import { LoginForm, RegisterForm, VerifyUser } from '../components';
+import {
+  LoginForm,
+  RegisterForm,
+  VerifyUser,
+  TransferForm,
+} from '../components';
 
 const Home: NextPage = () => {
   const handleTestApi = async () => {
@@ -32,6 +37,7 @@ const Home: NextPage = () => {
         <LoginForm />
         <RegisterForm />
         <VerifyUser />
+        <TransferForm />
       </main>
     </div>
   );

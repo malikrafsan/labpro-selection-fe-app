@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { apiSrv } from '../../../services';
 import AuthForm from '../AuthForm';
+import { useRouter } from 'next/router';
 
 const LoginForm = () => {
+  const router = useRouter();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,13 +19,14 @@ const LoginForm = () => {
     });
 
     if (data) {
-      console.log(data);
       apiSrv.setToken(data);
+      router.push('/');
     }
   };
 
   return (
     <AuthForm
+      title="Login to your account"
       fields={{
         username: {
           label: 'Username',
