@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { IParamsAPI } from '../interfaces';
+import { authSrv } from './';
 
 class APIBoundary {
   private readonly API_URL = 'http://localhost:5000';
@@ -111,18 +112,20 @@ class ApiSrv {
     withoutNotif?: boolean,
     onError?: (props: any) => void,
   ): null {
+    const msg = err.response?.data?.message || err.message;
+
     if (withoutNotif) {
       return null;
     }
 
     if (onError) {
-      onError(err);
+      onError(msg);
       return null;
     }
 
     this.defaultOnError({
       header: 'Error',
-      content: JSON.stringify(err),
+      content: JSON.stringify(msg),
     });
     return null;
   }
@@ -324,10 +327,7 @@ class ApiSrv {
   }
 
   private getToken() {
-    return localStorage.getItem('token');
-  }
-  public setToken(token: string) {
-    localStorage.setItem('token', token);
+    return authSrv.getToken();
   }
 }
 

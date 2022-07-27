@@ -25,3 +25,45 @@ export interface IAuthFormProps {
   };
   onSubmit: () => void;
 }
+
+export const VerificationStatus = {
+  DRAFT: 'DRAFT',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED',
+};
+
+export type VerificationStatusType = keyof typeof VerificationStatus;
+
+export interface IUser {
+  fotoKTP: string;
+  id_user: number;
+  is_admin: boolean;
+  linkKTP: string;
+  name: string;
+  password: string;
+  saldo: number;
+  username: string;
+  verification_status: VerificationStatusType;
+}
+
+export interface ISaldoChange {
+  amount_source: number;
+  amount_target: number;
+  currency: string;
+  id_req_saldo_change: number;
+  id_user: number;
+  verification_status: VerificationStatusType;
+}
+
+export interface ITransfer {
+  amount: number;
+  currency: string;
+  id_req_transfer: number;
+  id_user_dest: number;
+  id_user_src: number;
+}
+
+export interface ITransferHistory {
+  transfer_history_dest: ITransfer[];
+  transfer_history_src: ITransfer[];
+}

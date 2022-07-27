@@ -1,0 +1,48 @@
+.container {
+  min-width: 190px;
+  width: 17.5rem;
+  background-color: #191e37;
+}
+
+.title {
+  font-family: 'Manrope';
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.875rem;
+  color: #6956e5;
+  margin-left: 1rem;
+}
+
+.logoContainer {
+  width: 90px;
+  height: 90px;
+}
+
+.logoContainer > img {
+  width: 100%;
+  height: 100%;
+}
+
+.tabOption {
+  cursor: pointer;
+}
+
+.tabOptionLabel {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(8px + 0.625rem);
+  line-height: calc(12px + 0.875rem);
+  color: #ffffff;
+}
+
+.tabOptionActive {
+  color: #9b51e0;
+  background: #7bd0ff;
+  border-radius: 7px 0 0 7px;
+}
+
+.tabOptionActive .tabOptionLabel {
+  color: #191E37;
+  font-weight: 600;
+}

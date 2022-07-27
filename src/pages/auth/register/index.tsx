@@ -3,7 +3,7 @@ import { RegisterForm } from '../../../components';
 
 const RegisterPage = () => {
   return (
-    <div className={styles.container + ' page d-flex'}>
+    <div className={styles.container + ' d-flex'}>
       <div
         className={
           styles.leftContainer +

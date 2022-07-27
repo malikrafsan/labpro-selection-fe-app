@@ -69,7 +69,7 @@ const NotifContextProvider = ({
 
   return (
     <NotifContext.Provider value={pushNotif}>
-      <ToastContainer position="top-end" className="p-3">
+      <ToastContainer position="top-end">
         {notifs
           .map((notif) => {
             const { header, content, variant, id } = notif;
@@ -88,7 +88,7 @@ const NotifContextProvider = ({
           })
           .reverse()}
       </ToastContainer>
-      <div>{children}</div>
+      {children}
     </NotifContext.Provider>
   );
 };

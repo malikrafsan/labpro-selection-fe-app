@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { apiSrv } from '../../../services';
+import { apiSrv, authSrv } from '../../../services';
 import AuthForm from '../AuthForm';
 import { useRouter } from 'next/router';
 
@@ -19,7 +19,8 @@ const LoginForm = () => {
     });
 
     if (data) {
-      apiSrv.setToken(data);
+      authSrv.setToken(data.token);
+      authSrv.setIsAdmin(data.is_admin);
       router.push('/');
     }
   };

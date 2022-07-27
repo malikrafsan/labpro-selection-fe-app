@@ -1,5 +1,7 @@
-import AuthLayout from "./auth";
+import AuthenticatedPage from "./AuthenticatedPage";
+import AdminPage from "./AdminPage";
 
 export {
-  AuthLayout,
+  AuthenticatedPage,
+  AdminPage,
 }
