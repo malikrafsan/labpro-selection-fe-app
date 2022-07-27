@@ -22,6 +22,11 @@ class AuthSrv {
   public isAdmin(): boolean {
     return localStorage.getItem('is_admin') === 'true';
   }
+
+  public deleteAuthInfo() {
+    localStorage.removeItem('is_admin');
+    this.setToken('');
+  }
 }
 
 export default new AuthSrv();

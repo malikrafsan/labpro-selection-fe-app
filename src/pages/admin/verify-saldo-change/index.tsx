@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 
-import styles from './index.module.css';
 import { apiSrv } from '../../../services';
 import { ISaldoChange } from '../../../interfaces';
 import { NotifContext } from '../../../contexts';
 import { BootstrapVariant } from '../../../enums';
-import { AdminPage } from '../../../layouts';
+import { AdminPage, DashboardPage } from '../../../layouts';
+import { adminPageOptions } from '../';
 
 const VerifySaldoChange = () => {
   const [data, setData] = useState<ISaldoChange[]>([]);
@@ -56,50 +56,54 @@ const VerifySaldoChange = () => {
 
   return (
     <AdminPage>
-      <div>
-        <h1>Verify Saldo Changes</h1>
+      <DashboardPage options={adminPageOptions}>
         <div>
-          {isLoading && <div>Loading...</div>}
+          <h1>Verify Saldo Changes</h1>
           <div>
-            {data.map((datum) => {
-              return (
-                <div key={datum.id_req_saldo_change}>
-                  <div>
-                    <div>currency: {datum.currency}</div>
+            {isLoading && <div>Loading...</div>}
+            <div>
+              {data.map((datum) => {
+                return (
+                  <div key={datum.id_req_saldo_change}>
                     <div>
-                      amount_source: {datum.amount_source}
-                      <div>amount_target: {datum.amount_target}</div>
-                      <div>status: {datum.verification_status}</div>
+                      <div>currency: {datum.currency}</div>
+                      <div>
+                        amount_source: {datum.amount_source}
+                        <div>
+                          amount_target: {datum.amount_target}
+                        </div>
+                        <div>status: {datum.verification_status}</div>
+                      </div>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => {
+                          handleVerifySaldoChange(
+                            datum.id_req_saldo_change,
+                            true,
+                          );
+                        }}
+                      >
+                        verify
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleVerifySaldoChange(
+                            datum.id_req_saldo_change,
+                            false,
+                          );
+                        }}
+                      >
+                        Reject
+                      </button>
                     </div>
                   </div>
-                  <div>
-                    <button
-                      onClick={() => {
-                        handleVerifySaldoChange(
-                          datum.id_req_saldo_change,
-                          true,
-                        );
-                      }}
-                    >
-                      verify
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleVerifySaldoChange(
-                          datum.id_req_saldo_change,
-                          false,
-                        );
-                      }}
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      </DashboardPage>
     </AdminPage>
   );
 };

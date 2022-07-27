@@ -6,6 +6,9 @@ import VerifyUser from "./auth/VerifyUser";
 import TransferForm from "./transfer/TransferForm";
 import UploadImg from "./shared/UploadImg";
 import Sidebar from './shared/Sidebar';
+import Topbar from './shared/Topbar';
+import CreateForm from "./shared/CreateForm";
+import LoadingSpinner from "./shared/LoadingSpinner";
 
 export {
   AlertDismissible,
@@ -16,4 +19,7 @@ export {
   TransferForm,
   UploadImg,
   Sidebar,
+  Topbar,
+  CreateForm,
+  LoadingSpinner,
 }

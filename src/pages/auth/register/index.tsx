@@ -1,9 +1,11 @@
+import Link from 'next/link';
+
 import styles from './index.module.css';
 import { RegisterForm } from '../../../components';
 
 const RegisterPage = () => {
   return (
-    <div className={styles.container + ' d-flex'}>
+    <div className={styles.container + ' page d-flex'}>
       <div
         className={
           styles.leftContainer +
@@ -20,10 +22,21 @@ const RegisterPage = () => {
           ' d-flex justify-content-center align-items-center px-5'
         }
       >
-        <RegisterForm />
+        <div className="w-100">
+          <RegisterForm />
+          <Link href="/auth/login">
+            <div
+              className={
+                styles.redirectBtn + ' mt-3 btn w-100 text-end'
+              }
+            >
+              Already have account? Login here
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default RegisterPage;

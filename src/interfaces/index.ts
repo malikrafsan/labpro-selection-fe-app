@@ -67,3 +67,25 @@ export interface ITransferHistory {
   transfer_history_dest: ITransfer[];
   transfer_history_src: ITransfer[];
 }
+
+export interface ITopbarOption {
+  label: string;
+  href: string;
+}
+
+export interface ICreateFormProps {
+  title: string;
+  fields: {
+    [key: string]: {
+      label: string;
+      type: string;
+      value?: string;
+      onChange: (val: any) => void;
+      options?: {
+        label: string;
+        value: string;
+      }[];
+    };
+  };
+  onSubmit: () => void;
+}

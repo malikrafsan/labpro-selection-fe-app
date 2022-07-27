@@ -1,7 +1,18 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { AuthenticatedPage } from '../../layouts';
+import { AuthenticatedPage, DashboardPage } from '../../layouts';
+
+export const saldoChangesPageOptions = [
+  {
+    label: 'Create',
+    href: '/saldo-changes/create',
+  },
+  {
+    label: 'History',
+    href: '/saldo-changes/history',
+  },
+];
 
 const SaldoChangesPage = () => {
   const router = useRouter();
@@ -10,7 +21,11 @@ const SaldoChangesPage = () => {
     router.push('/saldo-changes/create');
   }, []);
 
-  return <AuthenticatedPage />;
+  return (
+    <AuthenticatedPage>
+      <DashboardPage options={saldoChangesPageOptions} />
+    </AuthenticatedPage>
+  );
 };
 
 export default SaldoChangesPage;

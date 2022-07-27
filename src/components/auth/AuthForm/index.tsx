@@ -15,7 +15,12 @@ const AuthForm = (props: IAuthFormProps) => {
   return (
     <form className="w-100">
       <h1 className={styles.title}>{title}</h1>
-      <div className={styles.fieldsContainer + ' d-flex justify-content-between'}>
+      <div
+        className={
+          styles.fieldsContainer +
+          ' d-flex justify-content-between flex-column flex-md-row'
+        }
+      >
         <div>
           {Object.keys(fields).map((key) => {
             const field = fields[key];
@@ -68,7 +73,7 @@ const AuthForm = (props: IAuthFormProps) => {
       <div className={styles.btnContainer}>
         <button
           onClick={wrapperSubmit}
-          className={styles.btnSubmit + ' mt-2 btn'}
+          className={styles.btnSubmit + ' mt-3 btn'}
         >
           Submit
         </button>

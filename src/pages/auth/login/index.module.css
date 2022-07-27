@@ -1,10 +1,10 @@
 .leftContainer {
-  background-color: #273C8A;
+  background-color: #273c8a;
   flex-grow: 5;
 }
 
 .rightContainer {
-  background-color: #7BCFFF;
+  background-color: #7bcfff;
   min-width: 360px;
   flex-grow: 2;
 }
@@ -16,4 +16,9 @@
 .iconContainer > img {
   width: 100%;
   height: 100%;
+}
+
+.redirectBtn {
+  color: #273c8a;
+  font-weight: 500;
 }

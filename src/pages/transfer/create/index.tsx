@@ -1,18 +1,29 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import styles from './index.module.css';
 import { apiSrv } from '../../../services';
-import { NotifContext } from '../../../contexts';
+import { NotifContext, GlobalStatesContext } from '../../../contexts';
 import { BootstrapVariant } from '../../../enums';
-import { AuthenticatedPage } from '../../../layouts';
+import { AuthenticatedPage, DashboardPage } from '../../../layouts';
+import { transferPageOptions } from '../';
+import { CreateForm, LoadingSpinner } from '../../../components';
 
 const CreateTransferPage = () => {
+  const pushNotif = useContext(NotifContext);
+  const globalStates = useContext(GlobalStatesContext);
+  const currencies = globalStates.currencies.map((currency) => {
+    return {
+      value: currency,
+      label: currency,
+    };
+  });
+
   const [usernameDest, setUsernameDest] = useState('');
   const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState('');
+  const [currency, setCurrency] = useState(
+    currencies.length > 0 ? currencies[0].value : '',
+  );
   const [isLoading, setIsLoading] = useState(false);
-
-  const pushNotif = useContext(NotifContext);
 
   const handleCreateTransfer = async () => {
     setIsLoading(true);
@@ -38,42 +49,36 @@ const CreateTransferPage = () => {
 
   return (
     <AuthenticatedPage>
-      <h1>Create Transfer</h1>
-      {isLoading && <div>Loading...</div>}
-      <div>
-        <div className={styles.formGroup}>
-          <label htmlFor="usernameDest">Username Dest</label>
-          <input
-            type="text"
-            id="usernameDest"
-            value={usernameDest}
-            onChange={(e) => setUsernameDest(e.target.value)}
+      <DashboardPage options={transferPageOptions}>
+        {isLoading && <LoadingSpinner />}
+        <div className="d-flex justify-content-center w-100 h-100 mt-5">
+          <CreateForm
+            title="Create Transfer"
+            fields={{
+              usernameDest: {
+                label: 'Username Dest',
+                type: 'text',
+                value: usernameDest,
+                onChange: (e) => setUsernameDest(e.target.value),
+              },
+              amount: {
+                label: 'Amount',
+                type: 'number',
+                value: amount + '',
+                onChange: (e) => setAmount(Number(e.target.value)),
+              },
+              currency: {
+                label: 'Currency',
+                type: 'dropdown',
+                options: currencies,
+                value: currency,
+                onChange: (val) => setCurrency(val),
+              },
+            }}
+            onSubmit={handleCreateTransfer}
           />
         </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="amount">Amount</label>
-          <input
-            type="number"
-            id="amount"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="currency">Currency</label>
-          <input
-            type="text"
-            id="currency"
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-          />
-        </div>
-      </div>
-      <div>
-        <button onClick={handleCreateTransfer}>
-          Create Transfer
-        </button>
-      </div>
+      </DashboardPage>
     </AuthenticatedPage>
   );
 };

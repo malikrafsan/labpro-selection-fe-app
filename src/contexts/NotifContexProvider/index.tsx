@@ -1,8 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { AlertDismissible } from '../../components';
 import { ToastContainer } from 'react-bootstrap';
 import { BootstrapVariant } from '../../enums';
-import { useEffect } from 'react';
 import { apiSrv } from '../../services';
 
 const NotifContext = createContext(

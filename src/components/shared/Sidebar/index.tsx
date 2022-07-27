@@ -1,8 +1,12 @@
-import styles from './index.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
-const tabOptions = [
+import styles from './index.module.css';
+import { authSrv } from '../../../services';
+import { ITopbarOption } from '../../../interfaces';
+
+const userTabOptions = [
   {
     label: 'Transfer',
     href: '/transfer',
@@ -11,6 +15,10 @@ const tabOptions = [
     label: 'Saldo Changes',
     href: '/saldo-changes',
   },
+];
+
+const adminTabOptions = [
+  ...userTabOptions,
   {
     label: 'Admin',
     href: '/admin',
@@ -20,6 +28,14 @@ const tabOptions = [
 const Sidebar = () => {
   const router = useRouter();
   const path = '/' + router.pathname.split('/')[1];
+
+  const [tabOptions, setTabOptions] = useState<ITopbarOption[]>([]);
+
+  useEffect(() => {
+    setTabOptions(
+      authSrv.isAdmin() ? adminTabOptions : userTabOptions,
+    );
+  }, []);
 
   return (
     <div

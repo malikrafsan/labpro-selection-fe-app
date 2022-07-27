@@ -1,7 +1,21 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { AdminPage as AdminPageLayout } from '../../layouts';
+import {
+  AdminPage as AdminPageLayout,
+  DashboardPage,
+} from '../../layouts';
+
+export const adminPageOptions = [
+  {
+    label: 'Verify User',
+    href: '/admin/verify-user',
+  },
+  {
+    label: 'Verify Saldo Change',
+    href: '/admin/verify-saldo-change',
+  },
+];
 
 const AdminPage = () => {
   const router = useRouter();
@@ -10,7 +24,11 @@ const AdminPage = () => {
     router.push('/admin/verify-user');
   }, []);
 
-  return <AdminPageLayout />;
-}
+  return (
+    <AdminPageLayout>
+      <DashboardPage options={adminPageOptions} />
+    </AdminPageLayout>
+  );
+};
 
 export default AdminPage;

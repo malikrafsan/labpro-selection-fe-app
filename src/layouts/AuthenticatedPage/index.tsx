@@ -21,12 +21,7 @@ const AuthenticatedPage = (props: {
     }
   }, []);
 
-  return (
-    <div className={' d-flex'}>
-      <Sidebar />
-      <div>{children}</div>
-    </div>
-  );
+  return <>{children}</>;
 };
 
 export default AuthenticatedPage;
