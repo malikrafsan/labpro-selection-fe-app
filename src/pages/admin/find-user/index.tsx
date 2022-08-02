@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
+import { IUser, IPagedTableProps } from '../../../interfaces';
 import styles from './index.module.css';
 import { apiSrv } from '../../../services';
-import { ISaldoChange, IPagedTableProps } from '../../../interfaces';
-import { AuthenticatedPage, DashboardPage } from '../../../layouts';
-import { saldoChangesPageOptions } from '../';
-import { PagedTable } from '../../../components';
+import { AdminPage, DashboardPage } from '../../../layouts';
+import { adminPageOptions } from '../';
+import { PagedTable, LoadingSpinner } from '../../../components';
 
 const TableElmtStr = (props: { str: string }) => {
   const { str } = props;
@@ -29,13 +29,23 @@ const TableElmtImg = (props: { link: string }) => {
 
 const columns = [
   {
-    key: 'currency',
-    label: 'CURRENCY',
+    key: 'username',
+    label: 'USERNAME',
     type: 'string',
   },
   {
-    key: 'amount',
-    label: 'AMOUNT',
+    key: 'name',
+    label: 'NAME',
+    type: 'string',
+  },
+  {
+    key: 'linkKTP',
+    label: 'FOTO KTP',
+    type: 'img',
+  },
+  {
+    key: 'saldo',
+    label: 'SALDO',
     type: 'string',
   },
   {
@@ -45,8 +55,8 @@ const columns = [
   },
 ];
 
-const SaldoChangesHistory = () => {
-  const [data, setData] = useState<ISaldoChange[]>([]);
+const FindUserPage = () => {
+  const [data, setData] = useState<IUser[]>([]);
   const [pagedTableProps, setPagedTableProps] =
     useState<IPagedTableProps>();
   const [isLoading, setIsLoading] = useState(false);
@@ -54,17 +64,18 @@ const SaldoChangesHistory = () => {
   const handleGetData = async () => {
     setIsLoading(true);
 
-    const data: ISaldoChange[] = await apiSrv.get({
-      url: 'saldo-changes',
+    const data = await apiSrv.get({
+      url: 'users',
     });
 
     if (data) {
+      console.log(data);
       setData(data);
       setPagedTableProps({
-        title: 'Saldo Changes History',
+        title: 'Find User',
         columns,
-        useSearch: false,
-        data: data.map((datum) => {
+        useSearch: true,
+        data: data.map((datum: IUser) => {
           return {
             elmts: columns.map((column) => {
               switch (column.type) {
@@ -90,10 +101,9 @@ const SaldoChangesHistory = () => {
                       key={column.key}
                     />
                   );
-                default:
-                  return <></>;
               }
             }),
+            querySearch: datum.username,
           };
         }),
       });
@@ -106,18 +116,17 @@ const SaldoChangesHistory = () => {
   }, []);
 
   return (
-    <AuthenticatedPage>
-      <DashboardPage options={saldoChangesPageOptions}>
-        <h1>SaldoChangesHistory</h1>
-        {isLoading && <div>Loading...</div>}
-        {pagedTableProps ? (
-          <PagedTable {...pagedTableProps} />
-        ) : (
-          <></>
-        )}
+    <AdminPage>
+      <DashboardPage options={adminPageOptions}>
+        {isLoading && <LoadingSpinner />}
+        <div className={styles.container + ' my-4'}>
+          <div className={styles.tableWrapper + ' mx-auto'}>
+            {pagedTableProps && <PagedTable {...pagedTableProps} />}
+          </div>
+        </div>
       </DashboardPage>
-    </AuthenticatedPage>
+    </AdminPage>
   );
 };
 
-export default SaldoChangesHistory;
+export default FindUserPage;

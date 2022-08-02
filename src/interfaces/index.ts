@@ -47,12 +47,15 @@ export interface IUser {
 }
 
 export interface ISaldoChange {
-  amount_source: number;
-  amount_target: number;
+  amount: number;
   currency: string;
   id_req_saldo_change: number;
   id_user: number;
   verification_status: VerificationStatusType;
+}
+
+export interface ISaldoChangeWithUser extends ISaldoChange {
+  user: IUser;
 }
 
 export interface ITransfer {
@@ -66,6 +69,26 @@ export interface ITransfer {
 export interface ITransferHistory {
   transfer_history_dest: ITransfer[];
   transfer_history_src: ITransfer[];
+}
+
+export interface ITransferWithUser extends ITransfer {
+  user_dest: IUser;
+  user_src: IUser;
+}
+
+export interface ITransferHistoryWithUser {
+  transfer_history_dest: ITransferWithUser[];
+  transfer_history_src: ITransferWithUser[];
+}
+
+export interface ITransferWithUserAdapted extends ITransfer {
+  user_dest: string;
+  user_src: string;
+}
+
+export interface ITransferHistoryWithUserAdapted {
+  transfer_history_dest: ITransferWithUserAdapted[];
+  transfer_history_src: ITransferWithUserAdapted[];
 }
 
 export interface ITopbarOption {
@@ -88,4 +111,30 @@ export interface ICreateFormProps {
     };
   };
   onSubmit: () => void;
+}
+
+export interface IVerifyTableProps {
+  title: string;
+  fields: {
+    [key: string]: {
+      label: string;
+      data: JSX.Element[];
+    };
+  };
+  keyFieldQuery?: string[];
+  onVerify: (idx: number) => void;
+  onReject: (idx: number) => void;
+}
+
+export interface IPagedTableProps {
+  title: string;
+  columns: {
+    label: string;
+    key: string;
+  }[];
+  data: {
+    elmts: JSX.Element[];
+    querySearch?: string;
+  }[];
+  useSearch: boolean;
 }

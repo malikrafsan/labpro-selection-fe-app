@@ -1,9 +1,11 @@
 import axios from 'axios';
+
+import configs from '../configs';
 import { IParamsAPI } from '../interfaces';
 import { authSrv } from './';
 
 class APIBoundary {
-  private readonly API_URL = 'http://localhost:5000';
+  private readonly API_URL = configs.API_URL;
 
   async get(token: string, path: string) {
     const url = `${this.API_URL}/${path}`;
@@ -42,6 +44,23 @@ class APIBoundary {
     try {
       const res = await axios({
         method: 'PUT',
+        url,
+        headers: this.generateHeader(token),
+        responseType: 'json',
+        data: payload,
+      });
+      return { res, err: null };
+    } catch (err) {
+      return { res: null, err };
+    }
+  }
+
+  async patch(token: string, path: string, payload: Object) {
+    const url = `${this.API_URL}/${path}`;
+
+    try {
+      const res = await axios({
+        method: 'PATCH',
         url,
         headers: this.generateHeader(token),
         responseType: 'json',
@@ -103,7 +122,15 @@ class ApiSrv {
     };
   }
 
-  public setDefaultOnError(onError: ({ header, content }: { header: string; content: string; }) => void) {
+  public setDefaultOnError(
+    onError: ({
+      header,
+      content,
+    }: {
+      header: string;
+      content: string;
+    }) => void,
+  ) {
     this.defaultOnError = onError;
   }
 
@@ -174,7 +201,7 @@ class ApiSrv {
       return true;
     }
 
-    this.errorHandler("Failed to fetch", withoutNotif, onError);
+    this.errorHandler('Failed to fetch', withoutNotif, onError);
     return false;
   }
 
@@ -197,10 +224,10 @@ class ApiSrv {
 
     const urlParams = params
       ? `${url}?${Object.keys(params)
-        .map(
-          (key) => `${key}=${params[key as keyof typeof params]}`,
-        )
-        .join('&')}`
+          .map(
+            (key) => `${key}=${params[key as keyof typeof params]}`,
+          )
+          .join('&')}`
       : url;
     const { res, err } = await ApiSrv.apiBoundary.get(
       token ? token : '',
@@ -274,6 +301,42 @@ class ApiSrv {
     const token = withoutCredentials ? null : this.getToken();
 
     const { res, err } = await ApiSrv.apiBoundary.put(
+      token ? token : '',
+      url,
+      params ? params : {},
+    );
+
+    if (err) {
+      return this.errorHandler(err, withoutNotif, onError);
+    }
+
+    if (!this.validateRes(res, withoutNotif, onError)) {
+      return null;
+    }
+
+    if (res) {
+      return this.successHandler(res.data, onSuccess);
+    }
+  }
+
+  public async patch(props: IParamsAPI) {
+    const {
+      params,
+      url,
+      withoutCredentials,
+      mock,
+      withoutNotif,
+      onError,
+      onSuccess,
+    } = props;
+
+    if (mock) {
+      return this.mockHandler(mock, withoutNotif, onError, onSuccess);
+    }
+
+    const token = withoutCredentials ? null : this.getToken();
+
+    const { res, err } = await ApiSrv.apiBoundary.patch(
       token ? token : '',
       url,
       params ? params : {},

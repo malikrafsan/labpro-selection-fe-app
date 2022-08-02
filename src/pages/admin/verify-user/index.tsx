@@ -1,38 +1,79 @@
 import { useState, useEffect, useContext } from 'react';
 
-import { IUser } from '../../../interfaces';
+import { IUser, IVerifyTableProps } from '../../../interfaces';
 import styles from './index.module.css';
 import { apiSrv } from '../../../services';
 import { NotifContext } from '../../../contexts';
 import { BootstrapVariant } from '../../../enums';
 import { AdminPage, DashboardPage } from '../../../layouts';
 import { adminPageOptions } from '../';
+import { VerifyTable, LoadingSpinner } from '../../../components';
+
+const TableElmtStr = (props: { str: string }) => {
+  const { str } = props;
+
+  return (
+    <div>
+      <div>{str}</div>
+    </div>
+  );
+};
+
+const TableElmtImg = (props: { link: string }) => {
+  const { link } = props;
+
+  return (
+    <div className={styles.ktpContainer}>
+      <img src={link} alt="foto KTP" />
+    </div>
+  );
+};
+
+const generateFieldPropsData = (data: IUser[]) => {
+  return {
+    username: {
+      label: 'Username',
+      data: data.map((datum: IUser) => {
+        return (
+          <TableElmtStr str={datum.username} key={datum.username} />
+        );
+      }),
+    },
+    name: {
+      label: 'Name',
+      data: data.map((datum: IUser) => {
+        return <TableElmtStr str={datum.name} key={datum.username} />;
+      }),
+    },
+    KTP: {
+      label: 'KTP',
+      data: data.map((datum: IUser) => {
+        return (
+          <TableElmtImg link={datum.linkKTP} key={datum.username} />
+        );
+      }),
+    },
+  };
+};
+
+let COUNTER = 0;
 
 const VerifyUserPage = () => {
   const [data, setData] = useState<IUser[]>([]);
+  const [verifyTableProps, setVerifyTableProps] =
+    useState<IVerifyTableProps>();
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState('');
+  const [key, setKey] = useState(COUNTER);
 
   const pushNotif = useContext(NotifContext);
-
-  const handleGetData = async () => {
-    setIsLoading(true);
-
-    const data = await apiSrv.get({
-      url: 'verify',
-    });
-
-    if (data) {
-      setData(data);
-    }
-    setIsLoading(false);
-  };
 
   const handleVerifyUser = async (
     username: string,
     verified: boolean,
   ) => {
-    const data = await apiSrv.post({
+    setIsLoading(true);
+
+    const res = await apiSrv.post({
       url: 'verify',
       params: {
         username,
@@ -40,13 +81,57 @@ const VerifyUserPage = () => {
       },
     });
 
-    if (data) {
+    if (res) {
       pushNotif({
         header: 'Success',
-        content: ['Successfully verify user'],
+        content: [
+          `Successfully ${verified ? 'verify' : 'reject'} user`,
+        ],
         variant: BootstrapVariant.SUCCESS,
       });
     }
+    const data = await handleGetData();
+    setData(data);
+    setVerifyTableProps({
+      title: 'Verify User',
+      fields: generateFieldPropsData(data),
+      onVerify: (idx) => onVerify(data[idx].username),
+      onReject: (idx) => onReject(data[idx].username),
+    });
+    COUNTER++;
+    setKey(COUNTER);
+
+    setIsLoading(false);
+  };
+
+  const onVerify = (username: string) => {
+    handleVerifyUser(username, true);
+  };
+
+  const onReject = (username: string) => {
+    handleVerifyUser(username, false);
+  };
+
+  const handleGetData = async () => {
+    setIsLoading(true);
+
+    const data = await apiSrv.get({
+      url: 'verify',
+    });
+    console.log(data);
+
+    if (data) {
+      setData(data);
+      setVerifyTableProps({
+        title: 'Verify User',
+        fields: generateFieldPropsData(data),
+        onVerify: (idx) => onVerify(data[idx].username),
+        onReject: (idx) => onReject(data[idx].username),
+      });
+    }
+    setIsLoading(false);
+
+    return data;
   };
 
   useEffect(() => {
@@ -56,52 +141,11 @@ const VerifyUserPage = () => {
   return (
     <AdminPage>
       <DashboardPage options={adminPageOptions}>
-        <div className={styles.container}>
-          <h1>Verify Page</h1>
-          <div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <button onClick={() => handleVerifyUser(username, true)}>
-              verify
-            </button>
-          </div>
-
-          <div>
-            {isLoading ? (
-              <div>Loading...</div>
-            ) : (
-              <div>
-                <div>unverified users</div>
-                <div>
-                  {data.map((datum) => {
-                    return (
-                      <div key={datum.id_user}>
-                        <div>name: {datum.name}</div>
-                        <div>username: {datum.username}</div>
-                        <div>
-                          <button
-                            onClick={() =>
-                              handleVerifyUser(datum.username, true)
-                            }
-                          >
-                            Verify
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleVerifyUser(datum.password, false)
-                            }
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+        {isLoading && <LoadingSpinner />}
+        <div className={styles.container + ' my-4'}>
+          <div className={styles.tableWrapper + ' mx-auto'}>
+            {verifyTableProps && (
+              <VerifyTable {...verifyTableProps} key={key} />
             )}
           </div>
         </div>

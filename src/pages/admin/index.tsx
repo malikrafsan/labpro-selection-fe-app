@@ -15,6 +15,10 @@ export const adminPageOptions = [
     label: 'Verify Saldo Change',
     href: '/admin/verify-saldo-change',
   },
+  {
+    label: 'Find User',
+    href: '/admin/find-user',
+  }
 ];
 
 const AdminPage = () => {
