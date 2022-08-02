@@ -1,5 +1,5 @@
 const configs = {
-  API_URL: 'http://localhost:5000',
+  API_URL: 'https://docker-prisma-express-ts-app.herokuapp.com/',
 };
 
 export default configs;
