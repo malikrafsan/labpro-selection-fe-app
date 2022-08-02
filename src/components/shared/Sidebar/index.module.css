@@ -46,3 +46,8 @@
   color: #191E37;
   font-weight: 600;
 }
+
+.btnLogout {
+  background: #dc3545;
+  color: #fff;
+}

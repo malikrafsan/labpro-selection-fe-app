@@ -1,0 +1,8 @@
+.btnContainer > button {
+  background-color: #7bd0ff;
+  font-weight: 500;
+  font-size: calc(6px + 0.625rem);
+  line-height: calc(10px + 0.75rem);
+  padding: 6px 10px;
+  border-radius: 8px;
+}

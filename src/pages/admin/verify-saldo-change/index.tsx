@@ -156,7 +156,7 @@ const VerifySaldoChange = () => {
     <AdminPage>
       <DashboardPage options={adminPageOptions}>
         {isLoading && <LoadingSpinner />}
-        <div className={styles.container + ' my-4'}>
+        <div className={styles.container + ' my-5'}>
           <div className={styles.tableWrapper + ' mx-auto'}>
             {verifyTableProps && (
               <VerifyTable {...verifyTableProps} key={key} />

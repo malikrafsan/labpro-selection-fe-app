@@ -2,4 +2,45 @@
   background-color: #fff;
   padding: 1rem;
   min-width: 800px;
+  border-radius: calc(6px + 0.375rem);
+}
+
+.title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: calc(8px + 0.625rem);
+  line-height: calc(10px + 0.875rem);
+  letter-spacing: 0.15px;
+  color: #000000;
+}
+
+.container thead {
+  background: #cfd3dc;
+}
+
+.container thead tr {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: calc(6px + 0.5rem);
+  line-height: calc(10px + 0.875rem);
+  letter-spacing: 0.15px;
+  color: #1c425e;
+}
+
+.infoContainer {
+  font-family: 'Raleway';
+  font-size: calc(6px + 0.5rem);
+  line-height: calc(10px + 0.875rem);
+}
+
+.btnPageControl {
+  color: #fff;
+  background-color: #191e37;
+}
+
+.inputContainer > input {
+  padding: 6px 10px;
+  border-radius: 8px;
 }

@@ -8,6 +8,10 @@ import { ITopbarOption } from '../../../interfaces';
 
 const userTabOptions = [
   {
+    label: 'Profile',
+    href: '/profile',
+  },
+  {
     label: 'Transfer',
     href: '/transfer',
   },
@@ -18,7 +22,6 @@ const userTabOptions = [
 ];
 
 const adminTabOptions = [
-  ...userTabOptions,
   {
     label: 'Admin',
     href: '/admin',
@@ -30,6 +33,11 @@ const Sidebar = () => {
   const path = '/' + router.pathname.split('/')[1];
 
   const [tabOptions, setTabOptions] = useState<ITopbarOption[]>([]);
+
+  const handleLogout = () => {
+    authSrv.deleteAuthInfo();
+    router.push('/auth/login');
+  };
 
   useEffect(() => {
     setTabOptions(
@@ -51,9 +59,6 @@ const Sidebar = () => {
             ' d-flex align-items-center justify-content-center'
           }
         >
-          <div className={styles.miniLogoContainer}>
-            <img src="/mini-logo.svg" alt="" />
-          </div>
           <Link href="/">
             <div className={styles.title + ' btn'}>Labpro Site</div>
           </Link>
@@ -65,22 +70,12 @@ const Sidebar = () => {
                 <a
                   className={
                     styles.tabOption +
-                    ' d-flex align-items-center mb-4 py-3 ' +
+                    ' d-flex align-items-center mb-4 py-3 ps-4 ' +
                     (option.href === path
                       ? styles.tabOptionActive
                       : '')
                   }
                 >
-                  <div className={styles.iconContainer + ' me-3'}>
-                    <img
-                      src={
-                        option.href === path
-                          ? '/folder-active.svg'
-                          : '/folder.svg'
-                      }
-                      alt="icon"
-                    />
-                  </div>
                   <div className={styles.tabOptionLabel + ' '}>
                     {option.label}
                   </div>
@@ -89,6 +84,14 @@ const Sidebar = () => {
             );
           })}
         </div>
+      </div>
+      <div className={styles.bottomSection}>
+        <button
+          onClick={handleLogout}
+          className={styles.btnLogout + ' btn mb-5'}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

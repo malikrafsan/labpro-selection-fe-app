@@ -3,3 +3,15 @@
   padding: 1rem;
   min-width: 800px;
 }
+
+.btnVerify {
+  background-color: #198754;
+}
+
+.btnReject {
+  background-color: #dc3545;
+}
+
+.btnVerify, .btnReject {
+  color: #fff;
+}

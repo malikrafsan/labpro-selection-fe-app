@@ -1,0 +1,57 @@
+.leftContainer {
+  background: #191e37;
+  border-radius: 1rem;
+  height: fit-content;
+  color: #fff;
+  width: 70%;
+}
+
+.sectionLbl {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(8px + 0.625rem);
+  line-height: calc(12px + 0.875rem);
+}
+
+.sectionVal {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(8px + 0.625rem);
+  line-height: calc(12px + 0.875rem);
+  color: #7bd0ff;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #7bd0ff;
+}
+
+.rightContainer {
+  width: 20%;
+}
+
+.ktpContainer {
+  max-width: 80%;
+  width: 400px;
+}
+
+.ktpContainer img {
+  width: 100%;
+}
+
+.verificationStatus {
+  background: #191e37;
+  border-radius: 1rem;
+  color: #fff;
+}
+
+.verificationStatusVal {
+  color: #198754;
+  font-weight: 600;
+}
+
+.bottomSection {
+  background: #191e37;
+  border-radius: 1rem;
+  color: #fff;
+  width: fit-content;
+}

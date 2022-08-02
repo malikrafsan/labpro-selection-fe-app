@@ -11,6 +11,7 @@ import CreateForm from './shared/CreateForm';
 import LoadingSpinner from './shared/LoadingSpinner';
 import VerifyTable from './admin/VerifyTable';
 import PagedTable from './shared/PagedTable';
+import ProfileBoard from './profile/ProfileBoard';
 
 export {
   AlertDismissible,
@@ -26,4 +27,5 @@ export {
   LoadingSpinner,
   VerifyTable,
   PagedTable,
+  ProfileBoard,
 };

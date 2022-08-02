@@ -13,7 +13,7 @@ const RegisterPage = () => {
         }
       >
         <div className={styles.iconContainer}>
-          <img src="/register-icon.svg" alt="auth icon" />
+          <img src="/login-icon.svg" alt="auth icon" />
         </div>
       </div>
       <div

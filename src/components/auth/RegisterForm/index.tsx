@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { useRouter } from 'next/router';
 
 import styles from './index.module.css';
 import { NotifContext } from '../../../contexts';
@@ -13,19 +12,21 @@ import {
   getDownloadURL,
   uploadBytesResumable,
 } from 'firebase/storage';
+import { LoadingSpinner } from '../../';
 
 const RegisterForm = () => {
-  const router = useRouter();
   const pushNotif = useContext(NotifContext);
 
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fotoKTP, setFotoKTP] = useState<File>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
+    setIsLoading(true);
+
     const base64 = fotoKTP ? await toBase64(fotoKTP) : '';
-    console.log(base64);
 
     if (!fotoKTP) {
       return;
@@ -49,19 +50,25 @@ const RegisterForm = () => {
       },
     });
 
+    setIsLoading(false);
+
     if (data) {
       pushNotif({
         header: 'Successfully register user',
-        content: [
-          'Please wait for admin to verify your account',
-        ],
+        content: ['Please wait for admin to verify your account'],
         variant: BootstrapVariant.SUCCESS,
       });
+
+      setName('');
+      setUsername('');
+      setPassword('');
+      setFotoKTP(undefined);
     }
   };
 
   return (
     <div className={styles.container + ' d-flex w-100'}>
+      {isLoading && <LoadingSpinner />}
       <AuthForm
         title="Register your account"
         fields={{

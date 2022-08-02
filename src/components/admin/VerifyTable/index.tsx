@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import styles from './index.module.css';
 import { IVerifyTableProps } from '../../../interfaces';
 import { PagedTable } from '../../';
 
@@ -11,8 +12,18 @@ const ActionBtnsContainer = (props: {
 
   return (
     <div>
-      <button onClick={onVerify}>Verify</button>
-      <button onClick={onReject}>Reject</button>
+      <button
+        onClick={onVerify}
+        className={styles.btnVerify + ' btn me-3'}
+      >
+        Verify
+      </button>
+      <button
+        onClick={onReject}
+        className={styles.btnReject + ' btn'}
+      >
+        Reject
+      </button>
     </div>
   );
 };
@@ -22,31 +33,36 @@ const VerifyTables = (props: IVerifyTableProps) => {
 
   const keys = Object.keys(fields);
   const len = fields[keys[0]].data.length;
-  const [data, _] = useState(Array(len)
-    .fill([])
-    .map((_, idx) => {
-      const datum: JSX.Element[] = [];
-      keys.forEach((key) => {
-        datum.push(fields[key].data[idx]);
-      });
-      datum.push(
-        <ActionBtnsContainer
-          onVerify={() => onVerify(idx)}
-          onReject={() => onReject(idx)}
-        />,
-      );
+  const [data, _] = useState(
+    Array(len)
+      .fill([])
+      .map((_, idx) => {
+        const datum: JSX.Element[] = [];
+        keys.forEach((key) => {
+          datum.push(fields[key].data[idx]);
+        });
+        datum.push(
+          <ActionBtnsContainer
+            onVerify={() => onVerify(idx)}
+            onReject={() => onReject(idx)}
+          />,
+        );
 
-      return {
-        elmts: datum,
-      };
-    }));
+        return {
+          elmts: datum,
+        };
+      }),
+  );
 
   return (
     <PagedTable
       title={title}
       data={data}
       columns={[
-        ...Object.values(keys).map((key) => ({ key, label: key.toUpperCase() })),
+        ...Object.values(keys).map((key) => ({
+          key,
+          label: key.toUpperCase(),
+        })),
         { label: 'ACTION', key: 'action' },
       ]}
       useSearch={false}

@@ -1,0 +1,15 @@
+.btnLogout {
+  background-color: #7bd0ff;
+  font-weight: 500;
+  font-size: calc(8px + 0.625rem);
+  line-height: calc(12px + 0.75rem);
+}
+
+.greet {
+  color: #fff;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: calc(12px + 0.875rem);
+  line-height: calc(16px + 1rem);
+}

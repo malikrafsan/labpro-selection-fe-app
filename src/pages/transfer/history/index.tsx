@@ -172,16 +172,19 @@ const TransferHistoryPage = () => {
   return (
     <AuthenticatedPage>
       <DashboardPage options={transferPageOptions}>
-        <div className={styles.container}>
-          <h1>Transfer History</h1>
-          <div>
+        <div className={styles.container + " p-5"}>
+          <div className={styles.btnContainer + " mb-3"}>
             <button
               onClick={() => setOption(TransferHistoryOption.AS_SRC)}
+              className="me-4"
+              disabled={option === TransferHistoryOption.AS_SRC}
             >
               AS SRC
             </button>
             <button
               onClick={() => setOption(TransferHistoryOption.AS_DEST)}
+              className="me-4"
+              disabled={option === TransferHistoryOption.AS_DEST}
             >
               AS DEST
             </button>

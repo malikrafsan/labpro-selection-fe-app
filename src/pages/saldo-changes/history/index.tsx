@@ -108,13 +108,14 @@ const SaldoChangesHistory = () => {
   return (
     <AuthenticatedPage>
       <DashboardPage options={saldoChangesPageOptions}>
-        <h1>SaldoChangesHistory</h1>
-        {isLoading && <div>Loading...</div>}
-        {pagedTableProps ? (
-          <PagedTable {...pagedTableProps} />
-        ) : (
-          <></>
-        )}
+        <div className={styles.container + ' p-5'}>
+          {isLoading && <div>Loading...</div>}
+          {pagedTableProps ? (
+            <PagedTable {...pagedTableProps} />
+          ) : (
+            <></>
+          )}
+        </div>
       </DashboardPage>
     </AuthenticatedPage>
   );

@@ -14,15 +14,22 @@ const PagedTable = (props: IPagedTableProps) => {
   const [pagedData, setPagedData] = useState(
     data.slice(0, MAX_ELEMENTS_PER_PAGE),
   );
+  const [idxData, setIdxData] = useState<{
+    start: number;
+    end: number;
+  }>({
+    start: 0,
+    end: MAX_ELEMENTS_PER_PAGE,
+  });
 
   const handlePageChange = (page: number) => {
     setPage(page);
-    setPagedData(
-      data.slice(
-        (page - 1) * MAX_ELEMENTS_PER_PAGE,
-        page * MAX_ELEMENTS_PER_PAGE,
-      ),
-    );
+
+    const start = (page - 1) * MAX_ELEMENTS_PER_PAGE;
+    const end = start + MAX_ELEMENTS_PER_PAGE;
+    setIdxData({ start, end });
+
+    setPagedData(data.slice(start, end));
   };
 
   const onChangeSearch = (query: string) => {
@@ -37,18 +44,25 @@ const PagedTable = (props: IPagedTableProps) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topbar}>{title}</div>
-      {useSearch && (
-        <div>
-          <input
-            type="text"
-            onChange={(e) => onChangeSearch(e.target.value)}
-            placeholder="Search"
-          />
-        </div>
-      )}
+      <div
+        className={
+          styles.topbar +
+          ' d-flex align-items-center mb-3 justify-content-between'
+        }
+      >
+        <div className={styles.title}>{title}</div>
+        {useSearch && (
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              onChange={(e) => onChangeSearch(e.target.value)}
+              placeholder="Search"
+            />
+          </div>
+        )}
+      </div>
       <div className={styles.contentContainer}>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               {columns.map((column) => {
@@ -70,20 +84,36 @@ const PagedTable = (props: IPagedTableProps) => {
             })}
           </tbody>
         </Table>
-        <div>
-          <button
-            onClick={() => handlePageChange(page - 1)}
-            disabled={page === 1}
-          >
-            Prev
-          </button>
-          <button
-            onClick={() => handlePageChange(page + 1)}
-            disabled={page >= maxPage}
-          >
-            Next
-          </button>
-          <div>Page: {page}</div>
+        <div
+          className={
+            styles.footer +
+            ' d-flex align-items-center justify-content-between'
+          }
+        >
+          <div className={styles.infoContainer}>
+            <div>Page: {page}</div>
+            <div>
+              Showing: {idxData.start + 1} -{' '}
+              {idxData.end < data.length ? idxData.end : data.length}{' '}
+              of {data.length}
+            </div>
+          </div>
+          <div className={styles.btnContainer}>
+            <button
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+              className={styles.btnPageControl + ' btn'}
+            >
+              Prev
+            </button>
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page >= maxPage}
+              className={styles.btnPageControl + ' btn ms-3'}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
