@@ -3,7 +3,7 @@
 > This app is developed by Malik Akbar Hashemi Rafsanjani (13520105), intended for Labpro selection. This app is frontend part. Spesification for this app can be looked at [here](https://docs.google.com/document/u/3/d/e/2PACX-1vTXfRSh4yLUKN8n0cyRYWwZVF5hvNYPoj-wvOs35dQnrE3iclnVYUx9kUAq0-cZdXztN1nLKGgjBbAa/pub)
 
 ## How to Run
-
+- Change API_URL to: `http://localhost:5000` in `src\configs\index.ts`
 - Steps for running this app are described below:
   ```
   yarn install
