@@ -5,11 +5,11 @@ import styles from './index.module.css';
 import { IPagedTableProps } from '../../../interfaces';
 
 const PagedTable = (props: IPagedTableProps) => {
-  const { title, data, columns, useSearch } = props;
+  const { title, columns, useSearch } = props;
+  const propData = props.data;
   const MAX_ELEMENTS_PER_PAGE = 10;
 
-  const maxPage = Math.ceil(data.length / MAX_ELEMENTS_PER_PAGE);
-
+  const [data, setData] = useState(propData);
   const [page, setPage] = useState(1);
   const [pagedData, setPagedData] = useState(
     data.slice(0, MAX_ELEMENTS_PER_PAGE),
@@ -22,6 +22,8 @@ const PagedTable = (props: IPagedTableProps) => {
     end: MAX_ELEMENTS_PER_PAGE,
   });
 
+  const maxPage = Math.ceil(data.length / MAX_ELEMENTS_PER_PAGE);
+
   const handlePageChange = (page: number) => {
     setPage(page);
 
@@ -33,12 +35,20 @@ const PagedTable = (props: IPagedTableProps) => {
   };
 
   const onChangeSearch = (query: string) => {
-    setPage(1);
-    const newData = data.filter((datum) => {
-      return datum
-        .querySearch!.toLowerCase()
-        .includes(query.toLowerCase());
+    const allRegex = query.split(' ').map((query: string) => {
+      return new RegExp(query, 'i');
     });
+
+    const newData = propData.filter((datum) => {
+      return allRegex.every((regex) => {
+        return datum.querySearch
+          ? regex.test(datum.querySearch)
+          : false;
+      });
+    });
+
+    setData(newData);
+    setPage(1);
     setPagedData(newData.slice(0, MAX_ELEMENTS_PER_PAGE));
   };
 

@@ -55,6 +55,10 @@ const columns = [
   },
 ];
 
+const generateQuerySearch = (user: IUser) => {
+  return `${user.username} ${user.name} ${user.verification_status}`;
+};
+
 const FindUserPage = () => {
   const [data, setData] = useState<IUser[]>([]);
   const [pagedTableProps, setPagedTableProps] =
@@ -69,7 +73,6 @@ const FindUserPage = () => {
     });
 
     if (data) {
-      console.log(data);
       setData(data);
       setPagedTableProps({
         title: 'Find User',
@@ -103,7 +106,7 @@ const FindUserPage = () => {
                   );
               }
             }),
-            querySearch: datum.username,
+            querySearch: generateQuerySearch(datum),
           };
         }),
       });
