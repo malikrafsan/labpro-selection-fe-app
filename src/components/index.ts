@@ -12,6 +12,8 @@ import LoadingSpinner from './shared/LoadingSpinner';
 import VerifyTable from './admin/VerifyTable';
 import PagedTable from './shared/PagedTable';
 import ProfileBoard from './profile/ProfileBoard';
+import TableElmtStr from './shared/TableElmtStr';
+import TableElmtImg from './shared/TableElmtImg';
 
 export {
   AlertDismissible,
@@ -28,4 +30,6 @@ export {
   VerifyTable,
   PagedTable,
   ProfileBoard,
+  TableElmtStr,
+  TableElmtImg,
 };

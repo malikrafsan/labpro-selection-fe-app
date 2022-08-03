@@ -10,27 +10,12 @@ import {
 } from '../../../interfaces';
 import { transferPageOptions } from '../';
 import { AuthenticatedPage, DashboardPage } from '../../../layouts';
-import { PagedTable, LoadingSpinner } from '../../../components';
-
-const TableElmtStr = (props: { str: string }) => {
-  const { str } = props;
-
-  return (
-    <div>
-      <div>{str}</div>
-    </div>
-  );
-};
-
-const TableElmtImg = (props: { link: string }) => {
-  const { link } = props;
-
-  return (
-    <div className={styles.ktpContainer}>
-      <img src={link} alt="foto KTP" />
-    </div>
-  );
-};
+import {
+  PagedTable,
+  LoadingSpinner,
+  TableElmtStr,
+  TableElmtImg,
+} from '../../../components';
 
 const columns = [
   {
@@ -172,8 +157,8 @@ const TransferHistoryPage = () => {
   return (
     <AuthenticatedPage>
       <DashboardPage options={transferPageOptions}>
-        <div className={styles.container + " p-5"}>
-          <div className={styles.btnContainer + " mb-3"}>
+        <div className={styles.container + ' p-5'}>
+          <div className={styles.btnContainer + ' mb-3'}>
             <button
               onClick={() => setOption(TransferHistoryOption.AS_SRC)}
               className="me-4"
@@ -191,7 +176,9 @@ const TransferHistoryPage = () => {
           </div>
           <div>
             {isLoading && <LoadingSpinner />}
-            {pagedTableProps && <PagedTable {...pagedTableProps} key={key} />}
+            {pagedTableProps && (
+              <PagedTable {...pagedTableProps} key={key} />
+            )}
           </div>
         </div>
       </DashboardPage>

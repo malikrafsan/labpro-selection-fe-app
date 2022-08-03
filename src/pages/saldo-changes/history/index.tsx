@@ -5,27 +5,11 @@ import { apiSrv } from '../../../services';
 import { ISaldoChange, IPagedTableProps } from '../../../interfaces';
 import { AuthenticatedPage, DashboardPage } from '../../../layouts';
 import { saldoChangesPageOptions } from '../';
-import { PagedTable } from '../../../components';
-
-const TableElmtStr = (props: { str: string }) => {
-  const { str } = props;
-
-  return (
-    <div>
-      <div>{str}</div>
-    </div>
-  );
-};
-
-const TableElmtImg = (props: { link: string }) => {
-  const { link } = props;
-
-  return (
-    <div className={styles.ktpContainer}>
-      <img src={link} alt="foto KTP" />
-    </div>
-  );
-};
+import {
+  PagedTable,
+  TableElmtStr,
+  TableElmtImg,
+} from '../../../components';
 
 const columns = [
   {

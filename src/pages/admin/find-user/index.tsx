@@ -5,27 +5,12 @@ import styles from './index.module.css';
 import { apiSrv } from '../../../services';
 import { AdminPage, DashboardPage } from '../../../layouts';
 import { adminPageOptions } from '../';
-import { PagedTable, LoadingSpinner } from '../../../components';
-
-const TableElmtStr = (props: { str: string }) => {
-  const { str } = props;
-
-  return (
-    <div>
-      <div>{str}</div>
-    </div>
-  );
-};
-
-const TableElmtImg = (props: { link: string }) => {
-  const { link } = props;
-
-  return (
-    <div className={styles.ktpContainer}>
-      <img src={link} alt="foto KTP" />
-    </div>
-  );
-};
+import {
+  PagedTable,
+  LoadingSpinner,
+  TableElmtStr,
+  TableElmtImg,
+} from '../../../components';
 
 const columns = [
   {

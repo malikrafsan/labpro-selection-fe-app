@@ -10,17 +10,11 @@ import { NotifContext } from '../../../contexts';
 import { BootstrapVariant } from '../../../enums';
 import { AdminPage, DashboardPage } from '../../../layouts';
 import { adminPageOptions } from '../';
-import { VerifyTable, LoadingSpinner } from '../../../components';
-
-const TableElmtStr = (props: { str: string }) => {
-  const { str } = props;
-
-  return (
-    <div>
-      <div>{str}</div>
-    </div>
-  );
-};
+import {
+  VerifyTable,
+  LoadingSpinner,
+  TableElmtStr,
+} from '../../../components';
 
 const generateFieldPropsData = (data: ISaldoChangeWithUser[]) => {
   return {
