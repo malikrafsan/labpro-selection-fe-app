@@ -7,27 +7,12 @@ import { NotifContext } from '../../../contexts';
 import { BootstrapVariant } from '../../../enums';
 import { AdminPage, DashboardPage } from '../../../layouts';
 import { adminPageOptions } from '../';
-import { VerifyTable, LoadingSpinner } from '../../../components';
-
-const TableElmtStr = (props: { str: string }) => {
-  const { str } = props;
-
-  return (
-    <div>
-      <div>{str}</div>
-    </div>
-  );
-};
-
-const TableElmtImg = (props: { link: string }) => {
-  const { link } = props;
-
-  return (
-    <div className={styles.ktpContainer}>
-      <img src={link} alt="foto KTP" />
-    </div>
-  );
-};
+import {
+  VerifyTable,
+  LoadingSpinner,
+  TableElmtStr,
+  TableElmtImg,
+} from '../../../components';
 
 const generateFieldPropsData = (data: IUser[]) => {
   return {
