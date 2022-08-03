@@ -55,3 +55,8 @@
 
   color: #191e37;
 }
+
+.dropdown {
+  height: 100px;
+  overflow: auto;
+}

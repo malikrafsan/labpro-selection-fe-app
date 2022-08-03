@@ -32,7 +32,7 @@ const CreateForm = (props: ICreateFormProps) => {
                       {field.value ? field.value : field.label}
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className={styles.dropdown}>
                       {options.map((option) => {
                         return (
                           <Dropdown.Item
