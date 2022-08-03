@@ -57,6 +57,8 @@
 }
 
 .dropdown {
-  height: 100px;
+  height: 160px;
+  border-radius: 8px;
+  top: 10px !important;
   overflow: auto;
 }
