@@ -10,14 +10,20 @@ const userTabOptions = [
   {
     label: 'Profile',
     href: '/profile',
+    icon: '/profile-icon.svg',
+    iconActive: '/profile-icon-active.svg',
   },
   {
     label: 'Transfer',
     href: '/transfer',
+    icon: '/transfer-icon.svg',
+    iconActive: '/transfer-icon-active.svg',
   },
   {
     label: 'Saldo Changes',
     href: '/saldo-changes',
+    icon: '/saldo-changes-icon.svg',
+    iconActive: '/saldo-changes-icon-active.svg',
   },
 ];
 
@@ -25,6 +31,8 @@ const adminTabOptions = [
   {
     label: 'Admin',
     href: '/admin',
+    icon: '/admin-icon.svg',
+    iconActive: '/admin-icon-active.svg',
   },
 ];
 
@@ -33,11 +41,6 @@ const Sidebar = () => {
   const path = '/' + router.pathname.split('/')[1];
 
   const [tabOptions, setTabOptions] = useState<ITopbarOption[]>([]);
-
-  const handleLogout = () => {
-    authSrv.deleteAuthInfo();
-    router.push('/auth/login');
-  };
 
   useEffect(() => {
     setTabOptions(
@@ -65,17 +68,27 @@ const Sidebar = () => {
         </div>
         <div className={styles.tabSection + ' mt-5 ps-5'}>
           {tabOptions.map((option) => {
+            const isActive = option.href === path;
+
             return (
               <Link key={option.href} href={option.href}>
                 <a
                   className={
                     styles.tabOption +
                     ' d-flex align-items-center mb-4 py-3 ps-4 ' +
-                    (option.href === path
-                      ? styles.tabOptionActive
-                      : '')
+                    (isActive ? styles.tabOptionActive : '')
                   }
                 >
+                  <div
+                    className={
+                      styles.tabOptionIconContainer + ' me-3'
+                    }
+                  >
+                    <img
+                      src={isActive ? option.iconActive : option.icon}
+                      alt={option.label}
+                    />
+                  </div>
                   <div className={styles.tabOptionLabel + ' '}>
                     {option.label}
                   </div>
@@ -84,14 +97,6 @@ const Sidebar = () => {
             );
           })}
         </div>
-      </div>
-      <div className={styles.bottomSection}>
-        <button
-          onClick={handleLogout}
-          className={styles.btnLogout + ' btn mb-5'}
-        >
-          Logout
-        </button>
       </div>
     </div>
   );

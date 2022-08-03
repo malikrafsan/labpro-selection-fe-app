@@ -13,7 +13,7 @@ const LoginPage = () => {
         }
       >
         <div className={styles.iconContainer + ' px-5'}>
-          <img src="/login-icon.svg" alt="auth icon" />
+          <img src="/auth-icon.svg" alt="auth icon" />
         </div>
       </div>
       <div

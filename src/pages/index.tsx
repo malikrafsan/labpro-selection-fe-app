@@ -1,9 +1,19 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 import styles from './index.module.css';
+import { authSrv } from '../services';
 import { AuthenticatedPage, DashboardPage } from '../layouts';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    authSrv.deleteAuthInfo();
+    router.push('/auth/login');
+  };
+
   return (
     <>
       <Head>
@@ -16,20 +26,34 @@ const Home: NextPage = () => {
       </Head>
       <AuthenticatedPage>
         <DashboardPage options={[]}>
-          <div
-            className={
-              styles.container + ' d-flex p-5 align-items-center'
-            }
-          >
-            <div className={styles.rightContainer}>
-              <div className={styles.imgContainer}>
-                <img src="/register-icon.svg" alt="" />
-              </div>
+          <div className={styles.wrapper + ' p-5'}>
+            <div
+              className={
+                styles.topSection + ' d-flex justify-content-end'
+              }
+            >
+              <button
+                onClick={handleLogout}
+                className={styles.btnLogout + ' btn btn-danger'}
+              >
+                Logout
+              </button>
             </div>
-            <div className={styles.leftContainer}>
-              <h1 className={styles.title + ' text-end'}>
-                Welcome to the Labpro Selection App
-              </h1>
+            <div
+              className={
+                styles.container + ' d-flex align-items-center'
+              }
+            >
+              <div className={styles.rightContainer}>
+                <div className={styles.imgContainer}>
+                  <img src="/home-icon.svg" alt="" />
+                </div>
+              </div>
+              <div className={styles.leftContainer}>
+                <h1 className={styles.title + ' text-end'}>
+                  Welcome to the Labpro Selection App
+                </h1>
+              </div>
             </div>
           </div>
         </DashboardPage>

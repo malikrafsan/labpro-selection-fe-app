@@ -94,6 +94,8 @@ export interface ITransferHistoryWithUserAdapted {
 export interface ITopbarOption {
   label: string;
   href: string;
+  icon: string;
+  iconActive: string;
 }
 
 export interface ICreateFormProps {

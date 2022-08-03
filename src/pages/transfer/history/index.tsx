@@ -10,7 +10,7 @@ import {
 } from '../../../interfaces';
 import { transferPageOptions } from '../';
 import { AuthenticatedPage, DashboardPage } from '../../../layouts';
-import { PagedTable } from '../../../components';
+import { PagedTable, LoadingSpinner } from '../../../components';
 
 const TableElmtStr = (props: { str: string }) => {
   const { str } = props;
@@ -179,18 +179,18 @@ const TransferHistoryPage = () => {
               className="me-4"
               disabled={option === TransferHistoryOption.AS_SRC}
             >
-              AS SRC
+              AS SOURCE
             </button>
             <button
               onClick={() => setOption(TransferHistoryOption.AS_DEST)}
               className="me-4"
               disabled={option === TransferHistoryOption.AS_DEST}
             >
-              AS DEST
+              AS DESTINATION
             </button>
           </div>
           <div>
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <LoadingSpinner />}
             {pagedTableProps && <PagedTable {...pagedTableProps} key={key} />}
           </div>
         </div>
