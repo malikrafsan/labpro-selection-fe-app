@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import styles from './index.module.css';
 import { authSrv } from '../../../services';
-import { ITopbarOption } from '../../../interfaces';
+import { ISidebarOption } from '../../../interfaces';
 
 const userTabOptions = [
   {
@@ -40,7 +40,7 @@ const Sidebar = () => {
   const router = useRouter();
   const path = '/' + router.pathname.split('/')[1];
 
-  const [tabOptions, setTabOptions] = useState<ITopbarOption[]>([]);
+  const [tabOptions, setTabOptions] = useState<ISidebarOption[]>([]);
 
   useEffect(() => {
     setTabOptions(

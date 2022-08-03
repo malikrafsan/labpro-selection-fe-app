@@ -94,6 +94,11 @@ export interface ITransferHistoryWithUserAdapted {
 export interface ITopbarOption {
   label: string;
   href: string;
+}
+
+export interface ISidebarOption {
+  label: string;
+  href: string;
   icon: string;
   iconActive: string;
 }
